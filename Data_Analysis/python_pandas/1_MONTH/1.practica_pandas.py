@@ -101,3 +101,5 @@ ri.loc[(ri.stop_duration == '1') | (ri.stop_duration == '2'), 'stop_duration'] =
 
 # Verificación final
 ri.stop_duration.value_counts(dropna=False)
+
+
