@@ -88,6 +88,10 @@ WHERE estado = 'pendiente';
 CREATE INDEX idx_estado
 ON ordenes(estado);
 
+EXPLAIN QUERY PLAN
+SELECT * FROM ordenes
+WHERE estado = 'pendiente'
+
 -- 2. QUERY CON JOIN
 SELECT
     c.nombre,
@@ -98,6 +102,21 @@ JOIN clientes c ON o.cliente_id = c.id
 JOIN productos p ON o.producto_id = p.id;
 
 -- ANALIZA SI NECESITA INDEXES
+CREATE INDEX idx_ordenes_cliente_id
+ON ordenes(cliente_id);
+
+CREATE INDEX idx_ordenes_producto_id
+ON ordenes(producto_id);
+
+EXPLAIN 
+SELECT
+    c.nombre,
+    p.nombre,
+    o.total
+FROM ordenes o
+JOIN clientes c ON o.cliente_id = c.id
+JOIN productos p ON o.producto_id = p.id;
+
 
 
 -- 3. QUERY DE FECHAS
@@ -106,6 +125,14 @@ FROM ordenes
 WHERE fecha_orden >= '2025-01-01';
 
 -- CREA INDEX PARA FECHA
+CREATE INDEX idx_orden_fecha
+ON ordenes(fecha_orden);
+
+EXPLAIN QUERY PLAN
+SELECT *
+FROM ordenes
+WHERE fecha_orden >= '2025-01-01';
+
 
 
 -- 4. QUERY CON ORDER BY
@@ -114,6 +141,13 @@ FROM productos
 ORDER BY precio DESC;
 
 -- REVISA PERFORMANCE
+EXPLAIN QUERY PLAN
+SELECT *
+FROM productos
+ORDER BY precio DESC;
+
+CREATE INDEX idx_productos_precio_desc
+ON productos(precio DESC);
 
 
 -- 5. QUERY CON GROUP BY
@@ -124,7 +158,15 @@ FROM ordenes
 GROUP BY estado;
 
 -- AGREGA INDEX Y COMPARA
+CREATE INDEX  idx_group_estado
+ON ordenes(estado)
 
+EXPLAIN
+SELECT
+    estado,
+    COUNT(*) AS total_ordenes
+FROM ordenes
+GROUP BY estado;
 
 -- =========================================
 -- TUS RETOS
@@ -151,3 +193,23 @@ GROUP BY estado;
 
 -- VER PLAN DE EJECUCION
 -- EXPLAIN SELECT * FROM ordenes WHERE estado='pendiente';
+
+--OPTIMIZA
+SELECT *
+FROM ordenes
+WHERE cliente_id = 1
+AND estado = 'entregado'
+ORDER BY fecha_orden DESC;
+
+CREATE INDEX idx_orden_cliente
+ON ordenes(cliente_id,estado,fecha_orden)
+
+---OTRO
+SELECT *
+FROM productos
+WHERE categoria = 'Tecnologia'
+AND precio < 500
+ORDER BY precio ASC;
+
+CREATE INDEX idx_productos_catego_precio
+ON productos(categoria,precio)
