@@ -193,4 +193,106 @@ def clean_sales_data(df):
 combine = clean_sales_data(df2)
 print(combine)
 
+#----_________TOTAL REVENUE_______---------
+# dataset:
+sales = pd.DataFrame({
+    "product": ["A","B","C"],
+    "quantity": [2, 5, 3],
+    "price": [10, 20, 15]
+})
     
+def add_total_revenue(df):
+    df = df.copy
+
+    df["revenue"] = (
+        df["quantity"] * df["price"]
+    )
+
+    return df
+sales_df = add_total_revenue(sales)
+print(sales_df)
+
+
+#----________AVERAGE SALES______--------
+def calculate_average_sales(df):
+    return df["sales"].mean()
+
+
+df = pd.DataFrame({
+    "sales": [100, 200, 300]
+})
+
+average = calculate_average_sales(df)
+print(average)
+
+#----------______Top Customer_________---------
+customer = pd.DataFrame({
+    "customer": ["John", "Ana", "Mike"],
+    "spent": [500, 1200, 300]
+})
+
+def get_top_customers(df, top_n=3):
+    return (
+        df.sort_values(
+            by="spent",
+            ascending=False
+        )
+        .head(top_n)
+    )
+top_customers = gettop_customers(customer, 2)
+print(top_customers)
+
+#---_________DATE CLEANER________--------
+dc = pd.DataFrame({
+    "date": [
+        "2026-01-01",
+        "2026/02/15",
+        "March 3 2026"
+    ]
+})
+def clean_dates(df,column):
+    df = df.copy()
+    df[column] = pd.to_datetime(
+        df[column]
+    )
+    return df
+
+dc_df = clean_dates(dc, "date")
+print(dc_df)
+
+#----________Inventory Totals_______----
+inventory = pd.DataFrame({
+    "product": ["A", "B", "C"],
+    "stock": [10, 5, 20]
+})
+
+def calculate_total_inventory(df):
+    return df["stock"].sum()
+
+total_stock = calculate_total_inventory(
+    inventory
+)
+
+print(total_stock)
+
+#--_________CRM Lead filters_____------
+crm = pd.DataFrame({
+    "name": ["John", "Ana", "Mike"],
+    "status": ["New", "Closed", "New"]
+})
+
+def filter_leads_by_status(df, status):
+    return df[
+        df["status"] == status
+    ]
+
+new_leads = filter_leads_by_status(crm, "New")
+print(new_leads)
+
+#-------_______PATTERB_______-----------
+def function_name(df, parameter):
+    df = df.copy()
+
+    # transformations
+
+    return df
