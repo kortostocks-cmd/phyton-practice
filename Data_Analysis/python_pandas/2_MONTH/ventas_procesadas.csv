@@ -1,0 +1,4 @@
+id,producto,precio_unidad,cantidad,fecha,total_ingreso
+101,SUNSCREEN SPRAY,25.0,2,2026-05-20,50.0
+102,HAIR SERUM,45.0,1,2026-05-21,45.0
+103,FRENCH GRAY SALT,12.5,4,2026-05-22,50.0

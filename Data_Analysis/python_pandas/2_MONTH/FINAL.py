@@ -47,6 +47,6 @@ if __name__ == "__main__":
     archivo_destino ="ventas_procesadas.cvs"
 
 # Correr el flujo
-df_origen = extraer_datos(archivo_origen)
+df_origen = extraer(archivo_origen)
 df_transformado = transformar_datos(df_origen)
 cargar_datos(df_transformado,archivo_destino)
